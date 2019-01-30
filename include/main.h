@@ -10,7 +10,8 @@
 #define MAIN_H_
 
 void initPorts();
-
+void initModbus();
+void initCycleTime();
 
 
 #endif /* MAIN_H_ */

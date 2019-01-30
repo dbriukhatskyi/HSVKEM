@@ -8,7 +8,7 @@
 
 #define PWR_UPD_INTERVAL 1000 // millis
 #define PWR_AVG_VAL_COUNT 16 // only powers of 2 allowed
-#define NUMBER_OF_COUNTERS 8
+#define NUMBER_OF_COUNTERS 16
 
 static uint32_t pulseCount[NUMBER_OF_COUNTERS] = { 0 };
 static uint16_t power[NUMBER_OF_COUNTERS] = { 0 };
@@ -38,7 +38,7 @@ uint16_t getPower(uint8_t inpNum) {
     return power[inpNum];
 }
 
-void updatePower() {
+void updatePowerValues() {
     static uint32_t lastUpdate = 0;
     
     if (millis() - lastUpdate > PWR_UPD_INTERVAL) {

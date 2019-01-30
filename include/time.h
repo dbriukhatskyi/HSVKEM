@@ -31,4 +31,12 @@ void initTimer();
 
 uint32_t millis();
 
+void updateCycleTime();
+
+void resetMaxCycleTime();
+
+uint32_t getLastCycleTime();
+
+uint32_t getMaxCycleTime();
+
 #endif /* TIME_H_ */

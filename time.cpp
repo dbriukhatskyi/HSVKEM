@@ -16,6 +16,9 @@
 volatile uint32_t currentMillisInt = 0;
 volatile uint8_t currentMillisFrac = 0;
 
+uint32_t lastCycleTime = 0;
+uint32_t maxCycleTime = 0;
+uint32_t lastCycleTimeUpdate = 0;
 
 void initTimer() {
     TCCR2B = (1 << CS21);// | (1 << CS20);
@@ -31,6 +34,33 @@ uint32_t millis() {
     sei();
 
     return result;
+}
+
+void updateCycleTime() {
+    uint32_t currentMillis;
+
+    cli();        
+        currentMillis = currentMillisInt;
+    sei(); 
+    
+    lastCycleTime = currentMillis - lastCycleTimeUpdate;
+    lastCycleTimeUpdate = currentMillis;
+    
+    if (lastCycleTime > maxCycleTime) {
+        maxCycleTime = lastCycleTime;
+    }
+}
+
+void resetMaxCycleTime() {
+    maxCycleTime = 0;
+}
+
+uint32_t getLastCycleTime() {
+    return lastCycleTime;
+}
+
+uint32_t getMaxCycleTime() {
+    return maxCycleTime;
 }
 
 ISR(TIMER2_OVF_vect) {

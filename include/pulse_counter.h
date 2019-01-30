@@ -17,6 +17,6 @@ void resetCount(uint8_t inpNum);
 
 uint16_t getPower(uint8_t inpNum);
 
-void updatePower();
+void updatePowerValues();
 
 #endif /* PULSE_COUNTER_H_ */
