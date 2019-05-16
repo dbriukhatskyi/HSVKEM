@@ -45,7 +45,7 @@ uint8_t coilState(uint8_t i) {
     } else if (i < 8) {
         return getForceValveOpen(i - 4);
     } else if (i < 16) {
-        return outputState(i - 8);
+        return outputState(i - 7);
     }
     
     return 0;
@@ -57,7 +57,7 @@ void setCoilState(uint8_t i, uint8_t state) {
     } else if (i < 8) {
         setForceValveOpen(i - 4, state);
     } else if ((i >= 12) && (i < 15)) {
-        output(i - 8, state);
+        output(i - 7, state);
     }
 }
 
