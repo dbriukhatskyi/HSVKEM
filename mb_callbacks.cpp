@@ -32,7 +32,7 @@ void setHoldingReg(uint16_t addr, uint16_t val) {
 }
 
 uint8_t discreteState(uint8_t i) {
-    if (i > 15) {
+    if (i > 16) {
         return 0;
     }
     

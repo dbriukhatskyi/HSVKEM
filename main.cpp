@@ -9,6 +9,7 @@
 #include "include/main.h"
 #include "include/time.h"
 #include "include/pulse_counter.h"
+#include "include/anti_flood.h"
 #include "MB/include/mb.h"
 #include "MB/include/mbport.h"
 #include "include/io.h"
@@ -28,6 +29,14 @@ void processInputs() {
     static uint32_t lastOnTime[16] = { 0 };
         
     debounceInputs();
+    
+    /* debug 
+    if (~PINA && (1 << 0))
+        PORTJ |= (1 << 6);
+    else 
+        PORTJ &= ~(1 << 6);
+    
+     end of debug */
 
     currentStates1_8 = PINA;
     currentStates9_16 = PINC;
@@ -46,7 +55,7 @@ void processInputs() {
             lastOnTime[i + 8] = millis();
         } else if (RISING_EDGE(currentStates9_16, lastStates9_16, i)) {    
             if (millis() - lastOnTime[i + 8] > TRESHOLD_TIME) {
-                addPulse(pinNumber(i + 8));
+                addPulse(pinNumber(i + 8) + 8);
             } 
         }
     }
@@ -64,7 +73,7 @@ int main(void) {
     initTimer();
     
     // Error 2 LED - on
-    PORTJ = 0b01000000;
+    // PORTJ = 0b01000000;
 
     uint32_t lastUpdate = millis();
     
@@ -78,6 +87,7 @@ int main(void) {
         }
 
         processInputs();
+        processAntiFlood();
         eMBPoll();
         updateCycleTime();
     }
