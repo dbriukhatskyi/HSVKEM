@@ -15,7 +15,8 @@
 uint8_t sensorInputs[GROUPS_COUNT] = { 1, 2, 3, 4 };
 uint8_t valveOutputs[GROUPS_COUNT] = { 1, 2, 3, 4 };
 
-bool sensorNormallyOpen[GROUPS_COUNT] = { false, false, false, false };
+bool sensorNormallyOpen[GROUPS_COUNT] = { false, false, false, false }; // false = flood alarm when input is 0
+bool relayStateOnAlarm[GROUPS_COUNT] = { true, true, true, true }; // relay state on alarm, true = energized
 
 bool permitValveOpen[GROUPS_COUNT] = { 0 };
 bool forceValveOpen[GROUPS_COUNT] = { 0 };
@@ -35,10 +36,10 @@ void processAntiFlood() {
                 }
             }
             
-            output(valveOutputs[i], command);
+            output(valveOutputs[i], command ^ relayStateOnAlarm[i]);
         }
         else {
-            output(valveOutputs[i], false);
+            output(valveOutputs[i], relayStateOnAlarm[i]);
         }
     }    
 }
