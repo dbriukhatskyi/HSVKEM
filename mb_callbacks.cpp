@@ -56,7 +56,7 @@ void setCoilState(uint8_t i, uint8_t state) {
         setPermitValveOpen(i, state);
     } else if (i < 8) {
         setForceValveOpen(i - 4, state);
-    } else if ((i >= 12) && (i < 15)) {
+    } else if ((i >= 12) && (i <= 15)) {
         output(i - 7, state);
     }
 }
